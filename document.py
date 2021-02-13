@@ -1,5 +1,5 @@
 from enum import IntEnum, Enum
-from typing import List
+from typing import List, Dict, Set
 
 class Lang(IntEnum):
     __ = 0
@@ -32,16 +32,26 @@ class MultilingualText(Component):
         super().__init__()
         self.body = {}
 
-    def ja(self, text: str, annotations=[]):
+    def ja(self, text: str, annotations=[]) -> 'MultilingualText':
         self.body[Lang.ja] = Text(text, annotations=annotations)
         return self
 
-    def en(self, text: str, annotations=[]):
+    def en(self, text: str, annotations=[]) -> 'MultilingualText':
         self.body[Lang.en] = Text(text, annotations=annotations)
+        return self
+
+    def add(self, texts: Dict[Lang, Text]) -> 'MultilingualText':
+        self.body.update(texts)
         return self
 
     def __getitem__(self, lang: Lang):
         return self.body[lang]
+    
+    def __enter__(self):
+        return self
+
+    def __exit__(self, ex_type, ex_value, trace):
+        pass
 
 class Metadata:
     def __init__(self) -> None:
@@ -57,6 +67,7 @@ class Paragraph(Component):
     
     def add(self, texts: List[MultilingualText]):
         self.sentences.extend(texts)
+        return self
 
 class Figure(Component):
     def __init__(self, title: MultilingualText, path_image) -> None:
@@ -109,14 +120,36 @@ class Document:
         text = self.root.show(lang, indent)
         print(text)
 
+def t(text: str, annotations: List[Annotation] = []):
+    return Text(text, annotations=annotations)
+
+def mt(texts: Dict[Lang, Text]) -> MultilingualText:
+    return MultilingualText().add(texts)
+
+def p(texts: List[MultilingualText]) -> Paragraph:
+    return Paragraph().add(texts)
+
 def test():
-    title = MultilingualText().ja('Pywrite 入門').en('An Introduction to Pywrite')
+    #title = mt().ja('Pywrite 入門').en('An Introduction to Pywrite')
+    title = mt({
+        Lang.ja: Text('Pywrite 入門'), 
+        Lang.en: Text('An Introduction to Pywrite'), 
+    })
     document = Document(title)
     root = document.getroot()
     node = TOC(MultilingualText().ja('概要').en('Overview'))
     root.add(node)
-    node = TOC(MultilingualText().ja('はじめに').en('Preface'))
+    node = TOC(MultilingualText().ja('はじめに').en('Preface'), content=Content(ContentType.Concept))
     root.add(node)
+
+    node.content.add([
+        p([
+            mt({
+                Lang.ja: t('この文書は'), 
+                Lang.en: t('This document is'), 
+            })
+        ])
+    ])
 
     document.show_table_of_contents(Lang.ja)
     document.show_table_of_contents(Lang.en)
