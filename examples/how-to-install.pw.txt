@@ -1,0 +1,17 @@
+.chapter インストール方法
+    @en How to install Pywrite
+
+    .p
+        @ja 
+        @en
+    
+    .fig
+        @ja
+        @en
+        @href
+
+    .section ::installation/section-setup-python-modules.pw
+
+    .section ::installation/section-setup-apache-fop.pw
+
+

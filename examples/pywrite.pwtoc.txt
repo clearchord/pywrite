@@ -1,0 +1,44 @@
+.meta ::relative-path-to-shared-settings -- コメント
+    @indent 4
+    @pivot ja
+    @allow absolute-path unc-path
+    @toc @depth 5
+
+.title Pywrite入門 -- @なしのテキストはpivot言語のタイトルとみなす。
+    @en An Introduction to Pywrite
+
+    .preface はじめに @en Preface
+        .p
+            @ja 日本語テキスト
+            @en Text in English
+
+    .acknowledgement ::relative-path -- 外部ファイルを参照するときは、外部ファイルのトップ要素と一致させなければならない。この場合、外部ファイルはacknowledgement
+
+    .chapter
+        @ja 特長
+        @en Features
+        - インデントによるネスト構造
+            @en Nested structures introduced by indents
+            # # はordered list
+                @en # introduces an ordered list.
+            # - はunordered list
+                @en - introduces a unordered list.
+        - 
+            @ja 複数言語統合フォーマット
+            @en Integrated multilingual format
+        - 可能な限り括弧を使わず、スペースをデリミタとするシンタックス
+            @en Syntax 
+        - 参照先パスは常に相対パス。設定で絶対パス、UNCパスなどを許可できる。
+        - タグの属性を次の行に書ける
+        - 
+            @ja 外部ファイルを参照するときは、外部ファイルのトップ要素と一致させなければならない。
+                更に、外部参照以外の属性を指定してはならない。
+                すべての相対パスは、TOCファイルのあるフォルダを起点として指定する。
+            @en When you specify a reference to an external file to an element, 
+                the top element in the external file must be the same as the source element.
+                Furthermore, no attribute must be specified to the source element.
+
+    .chapter ::installation/how-to-install.pw -- 相対パスから
+
+    .appendix ::appendix/appendix-a.pw
+
