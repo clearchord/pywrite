@@ -1,11 +1,14 @@
-.meta ::relative-path-to-shared-settings -- コメント
-    @indent 4
-    @pivot ja
-    @allow absolute-path unc-path
-    @toc @depth 5
 
-.title Pywrite入門 -- @なしのテキストはpivot言語のタイトルとみなす。
-    @en An Introduction to Pywrite
+.document
+
+    .meta ::relative-path-to-shared-settings -- コメント
+        @indent 4
+        @pivot ja
+        @allow absolute-path unc-path
+        @toc @depth 5
+
+        .title Pywrite入門 -- @なしのテキストはpivot言語のタイトルとみなす。
+            @en An Introduction to Pywrite
 
     .preface はじめに @en Preface
         .p
